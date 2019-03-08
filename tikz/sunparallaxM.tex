@@ -1,0 +1,35 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+% 1cm = 28.45274 pt
+\tpc{!ht}{
+\node[circle,inner sep=0.3pt, draw,label={[xshift=-5pt, yshift=5pt]$\scriptscriptstyle S$}](sunc) at (-3,3) {};
+\draw (sunc) circle (1cm); %% SUn
+
+\node[circle,right=4cm of sunc,inner sep=0.3pt, draw,label={[xshift=5pt, yshift=-20pt]$\scriptscriptstyle T$}](earthc) {};
+\def\Rzero{0.5cm};
+\draw (earthc) circle (\Rzero); %% Earth
+
+
+\node[circle, right=2.5cm of earthc, inner sep=0.3pt, draw, label={[xshift=5pt, yshift=-20pt]$\scriptscriptstyle M$}](marsc) {};
+\draw (marsc) circle (0.3cm); %%Mars
+
+\draw (sunc) -- (earthc) node[pos=0.62, below] {$a_0$} (earthc) -- (marsc) node[pos=0.62, below] {$\scriptscriptstyle\Delta$};
+
+\calcLength(sunc,earthc){azero};
+\calcLength(earthc,marsc){Deltam};
+
+\pgfmathsetmacro{\sunP}{asin(\Rzero/\azero)};
+\pgfmathparse{\azero/28.45274*cos(\sunP)};
+\draw[name path= Rzeros] (sunc)--++(\sunP:\pgfmathresult);
+\pgfmathsetmacro{\marsP}{asin(\Rzero/\Deltam)};
+\pgfmathparse{\Deltam/28.45274*cos(\marsP)};
+\draw[name path= Rzerom] (marsc)--++(180-\marsP:\pgfmathresult);
+
+\draw (earthc)--++(90-\marsP:\Rzero);
+\draw (earthc)--++(90+\sunP:\Rzero) node[midway,xshift=-4pt] {$\scriptscriptstyle R_0$};
+
+}{(-0.5,1.5)}{7cm}{Parallasse del sole: marte opposizione perielica.}
+\end{document}
+
+
+

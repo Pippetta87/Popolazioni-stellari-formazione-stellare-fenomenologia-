@@ -1,0 +1,43 @@
+\documentclass[../main.tex]{subfiles}
+
+\makeatletter   
+\newcommand*{\myellipse}[3]{
+  % Bigger axis: #3
+  % Smaller axis: sqrt([#3]ˆ2 - |uv|ˆ2)
+  \coordinate (midpoint) at ($(#1)!0.5!(#2)$) {};
+
+  % Calculate angle
+  \pgfmathanglebetweenpoints{\pgfpointanchor{#1}{center}}
+                            {\pgfpointanchor{#2}{center}}
+  \let\angle\pgfmathresult % save result in \angle 
+
+
+  % calculate distance
+  \pgfpointdiff{\pgfpointanchor{#1}{center}}
+               {\pgfpointanchor{#2}{center}}
+  \pgf@xa=\pgf@x % no need to use a new dimen
+  \pgf@ya=\pgf@y
+  \pgfmathparse{veclen(\pgf@xa,\pgf@ya)/28.45274} %  to convert from                      % pt to cm 
+  \let\uv\pgfmathresult % save the result in \uv
+
+  \draw [rotate around={\angle:(midpoint)}] 
+        (midpoint) ellipse ({#3} and {sqrt((#3)*(#3) - (\uv)*(\uv))}); 
+}
+\makeatother   
+
+\begin{document}
+
+
+
+\tpc{!ht}{[x=1cm, y=1cm]
+
+  \node[circle,draw,inner sep=1pt,label=above:$CM$,fill]  at (0,0) (a)  {};
+  \coordinate (b) at (1.5,0);
+  \myellipse{a}{b}{1.9};
+
+  \coordinate (d) at (-0.9,0) {};
+  \myellipse{a}{d}{1.1};
+  
+  
+}{(2,-2)}{9cm}{Sistema binario: moto attorno al CM.}
+\end{document}

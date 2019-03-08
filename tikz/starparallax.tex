@@ -1,0 +1,47 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+
+\tpc{!ht}{[x=1cm, y=1cm]
+\newcommand*{\lat}{10.0}% lat
+\newcommand*{\rt}{2.0}% rt
+\newcommand*{\rstar}{4.0}% rstar
+
+
+\node[circle,inner sep=0.1pt,fill, draw,label={[xshift=-5pt, yshift=-15pt]\tiny T}](geoc) at (0,0) {};
+\draw[name path =surface] (geoc) arc (0:360:\rt);
+\draw (geoc)--++(0:\rt);
+\node (geoc)--++(\lat+20.0:\rstar) {};
+
+
+\begin{comment}
+\path [name intersections={of = z and geos}];
+\coordinate[label={[label distance=0.5mm]120:\tiny O}] (O) at (intersection-1);
+
+
+
+\coordinate[label={[label distance=0pt]-180:\tiny R}] (R) at ($ (geo) !.5! (O) $);
+
+\draw (O)++(0.5,0) arc (0:-90:0.5cm) node[midway,label={[label distance=-10pt]130:$\scriptscriptstyle\ang{90}$}] {};
+\draw (O)++(0,0.7) arc (90:40:0.7cm) node [midway,above] {$\scriptscriptstyle z'$};
+\draw[name path =omp] (O)--++(\zp:2.5cm);
+\draw[name path =om] (O)--++(0:2cm);
+
+\draw[name path =tmp] (geo)--++(\cp:3.5cm);
+\draw[name path =tm] (geo)--++(30:2.5cm);
+
+\path [name intersections={of = omp and tmp}];
+\node[draw,fill,circle,inner sep=0.5pt,label={[label distance=0.5pt]45:$\scriptstyle M'$}] (mp) at (intersection-1) {};
+\path [name intersections={of = om and tm}];
+\node[draw,fill,circle,inner sep=0.5pt,label={[label distance=0.5pt]45:$\scriptstyle M$}] (m) at (intersection-1) {};
+\coordinate[label={[label distance=0pt]-2:$\scriptscriptstyle \Delta$}] (Delta) at ($ (geo) !.5! (m) $);
+\calcLength(O,geo){radius};
+\calcLength(m,geo){Deltam};
+\pgfmathsetmacro{\horizontalP}{asin(\radius/\Deltam)};
+\pgfmathsetmacro{\diurnalP}{asin(sin(\horizontalP)*sin(\zp))};
+\draw[] (mp)++(220:0.5cm) arc (220:(220+\diurnalP):0.5cm) node[midway] {$\scriptscriptstyle p'$};
+\draw[] (m)++(180:0.5cm) arc (180:(180+\horizontalP):0.5cm) node[midway,right] {$\scriptscriptstyle p$};
+\end{comment}
+
+}{(0,-2)}{7cm}{Parallasse diurna.}
+\end{document}
